@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Validator } from '../../validators/validator';
@@ -29,5 +30,15 @@ export class UsersService {
     }
 
     return user;
+  }
+
+  async updateUser(data: UpdateUserDto, email: string) {
+    const user = await this.userRepository.findOneByEmail(email);
+
+    if (!user) {
+      throw new BadRequestException(`User with email ${email} does not exist`);
+    }
+
+    //return this.userRepository.update(data);
   }
 }

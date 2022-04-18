@@ -4,11 +4,13 @@ import { UsersService } from './users.service';
 import { internet } from 'faker';
 import { Validator } from '../../validators/validator';
 import { UserRepositoryContracts } from './contracts/user-repository.contract';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 describe('UsersService', () => {
   const users = [];
   let service: UsersService;
   let createUserDto: CreateUserDto;
+  let updateUserDto: UpdateUserDto;
 
   const mockedUserRepository: UserRepositoryContracts = {
     create: jest.fn((user) => {
@@ -21,9 +23,14 @@ describe('UsersService', () => {
   };
 
   beforeEach(async () => {
-      createUserDto = {
+    createUserDto = {
       name: internet.userName(),
       email: internet.email(),
+      password: internet.password(),
+    };
+
+    updateUserDto = {
+      name: internet.userName(),
       password: internet.password(),
     };
 
@@ -125,6 +132,16 @@ describe('UsersService', () => {
       mockedUserRepository.create(createUserDto);
       const promise = service.findOneByEmail(createUserDto.email);
       expect(promise).resolves.toEqual(createUserDto);
+    });
+  });
+
+  describe('updateUser', () => {
+    it('should return exception to a user not-exists', () => {
+      const email = internet.email();
+      const promise = service.updateUser(updateUserDto, email);
+      expect(promise).rejects.toThrowError(
+        `User with email ${email} does not exist`,
+      );
     });
   });
 });
