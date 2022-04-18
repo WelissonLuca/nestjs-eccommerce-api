@@ -8,11 +8,7 @@ import { UserRepositoryContracts } from './contracts/user-repository.contract';
 describe('UsersService', () => {
   const users = [];
   let service: UsersService;
-  const createUserDto: CreateUserDto = {
-    name: internet.userName(),
-    email: internet.email(),
-    password: internet.password(),
-  };
+  let createUserDto: CreateUserDto;
 
   const mockedUserRepository: UserRepositoryContracts = {
     create: jest.fn((user) => {
@@ -25,6 +21,12 @@ describe('UsersService', () => {
   };
 
   beforeEach(async () => {
+      createUserDto = {
+      name: internet.userName(),
+      email: internet.email(),
+      password: internet.password(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
@@ -117,6 +119,12 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError(
         `User with email ${email} does not exist`,
       );
+    });
+
+    it('should return user', () => {
+      mockedUserRepository.create(createUserDto);
+      const promise = service.findOneByEmail(createUserDto.email);
+      expect(promise).resolves.toEqual(createUserDto);
     });
   });
 });
