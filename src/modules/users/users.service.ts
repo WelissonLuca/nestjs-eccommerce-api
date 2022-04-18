@@ -20,4 +20,14 @@ export class UsersService {
     }
     return this.userRepository.create(user);
   }
+
+  async findOneByEmail(email: string) {
+    const user = await this.userRepository.findOneByEmail(email);
+
+    if (!user) {
+      throw new BadRequestException(`User with email ${email} does not exist`);
+    }
+
+    return user;
+  }
 }

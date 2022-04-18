@@ -103,10 +103,20 @@ describe('UsersService', () => {
       );
     });
 
-    it('should create a user', async () => { 
+    it('should create a user', async () => {
       const user = await service.createUser(createUserDto);
 
       expect(user).toEqual(createUserDto);
+    });
+  });
+
+  describe('findOneByEmail', () => {
+    it('should return exception to a user not-exists', () => {
+      const email = internet.email();
+      const promise = service.findOneByEmail(email);
+      expect(promise).rejects.toThrowError(
+        `User with email ${email} does not exist`,
+      );
     });
   });
 });
