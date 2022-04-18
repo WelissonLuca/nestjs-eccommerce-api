@@ -3,8 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { internet } from 'faker';
 import { Validator } from '../../validators/validator';
+import { UserRepositoryContracts } from './contracts/user-repository.contract';
 
 describe('UsersService', () => {
+  const users = [];
   let service: UsersService;
   const createUserDto: CreateUserDto = {
     name: internet.userName(),
@@ -12,9 +14,26 @@ describe('UsersService', () => {
     password: internet.password(),
   };
 
+  const mockedUserRepository: UserRepositoryContracts = {
+    create: jest.fn((user) => {
+      users.push(user);
+      return user;
+    }),
+    findOneByEmail: jest.fn((email) => {
+      return users.find((user) => user.email === email);
+    }),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService, Validator],
+      providers: [
+        UsersService,
+        Validator,
+        {
+          provide: 'UserRepository',
+          useValue: mockedUserRepository,
+        },
+      ],
     }).compile();
 
     service = module.get<UsersService>(UsersService);
@@ -72,6 +91,15 @@ describe('UsersService', () => {
       });
       expect(promise).rejects.toThrowError(
         'Password must be between 6 and 20 characters',
+      );
+    });
+    it('should not create a user if user already exists', () => {
+      jest
+        .spyOn(mockedUserRepository, 'findOneByEmail')
+        .mockReturnValueOnce(Promise.resolve(createUserDto));
+      const promise = service.createUser(createUserDto);
+      expect(promise).rejects.toThrowError(
+        `User with email ${createUserDto.email} already exists`,
       );
     });
   });
