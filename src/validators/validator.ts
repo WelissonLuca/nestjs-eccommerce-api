@@ -14,7 +14,6 @@ export class Validator {
 
   private createUserValidate(user: CreateUserDto): void {
     for (const key in user) {
-      console.log(user[key]);
       if (!user[key]) throw new BadRequestException(`${key} is required`);
     }
     if (!isEmail(user.email))
