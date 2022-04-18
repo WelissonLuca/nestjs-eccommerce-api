@@ -39,6 +39,6 @@ export class UsersService {
       throw new BadRequestException(`User with email ${email} does not exist`);
     }
 
-    //return this.userRepository.update(data);
+    return this.userRepository.update(data, email);
   }
 }

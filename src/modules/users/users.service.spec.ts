@@ -20,6 +20,12 @@ describe('UsersService', () => {
     findOneByEmail: jest.fn((email) => {
       return users.find((user) => user.email === email);
     }),
+    update: jest.fn((data, email) => {
+      const user = users.find((user) => user.email === email);
+      user.name = data.name;
+      user.password = data.password;
+      return user;
+    }),
   };
 
   beforeEach(async () => {
@@ -142,6 +148,14 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError(
         `User with email ${email} does not exist`,
       );
+    });
+
+    it('should update user', async () => {
+      mockedUserRepository.create(createUserDto);
+
+      const user = await service.updateUser(updateUserDto, createUserDto.email);
+
+      expect(user).toEqual({ ...createUserDto, ...updateUserDto });
     });
   });
 });
