@@ -12,13 +12,12 @@ export class UsersService {
   ) {}
   async createUser(user: CreateUserDto) {
     this.validator.validate(user, 'createUser');
-
     const userExists = await this.userRepository.findOneByEmail(user.email);
-
     if (userExists) {
       throw new BadRequestException(
         `User with email ${user.email} already exists`,
       );
     }
+    return this.userRepository.create(user);
   }
 }

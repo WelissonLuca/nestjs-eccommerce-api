@@ -102,5 +102,11 @@ describe('UsersService', () => {
         `User with email ${createUserDto.email} already exists`,
       );
     });
+
+    it('should create a user', async () => { 
+      const user = await service.createUser(createUserDto);
+
+      expect(user).toEqual(createUserDto);
+    });
   });
 });
