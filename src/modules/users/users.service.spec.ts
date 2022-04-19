@@ -149,6 +149,55 @@ describe('UsersService', () => {
         `User with email ${email} does not exist`,
       );
     });
+    it('should not update user if name is null', () => {
+      mockedUserRepository.create(createUserDto);
+      const promise = service.updateUser(
+        {
+          ...updateUserDto,
+          name: '',
+        },
+        createUserDto.email,
+      );
+      expect(promise).rejects.toThrowError('name is required');
+    });
+    it('should not update user if password is null', () => {
+      mockedUserRepository.create(createUserDto);
+      const promise = service.updateUser(
+        {
+          ...createUserDto,
+          password: '',
+        },
+        createUserDto.email,
+      );
+      expect(promise).rejects.toThrowError('password is required');
+    });
+    it('should not update a user if password less than 6 characters', () => {
+      mockedUserRepository.create(createUserDto);
+      const promise = service.updateUser(
+        {
+          ...updateUserDto,
+          password: '12345',
+        },
+        createUserDto.email,
+      );
+      expect(promise).rejects.toThrowError(
+        'Password must be between 6 and 20 characters',
+      );
+    });
+
+    it('should not create a user if password longer than 20 characters', () => {
+      mockedUserRepository.create(createUserDto);
+      const promise = service.updateUser(
+        {
+          ...updateUserDto,
+          password: internet.password(21),
+        },
+        createUserDto.email,
+      );
+      expect(promise).rejects.toThrowError(
+        'Password must be between 6 and 20 characters',
+      );
+    });
 
     it('should update user', async () => {
       mockedUserRepository.create(createUserDto);

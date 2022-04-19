@@ -1,6 +1,7 @@
 import { isEmail } from 'class-validator';
 import { CreateUserDto } from './../modules/users/dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { UpdateUserDto } from 'src/modules/users/dtos/update-user.dto';
 
 @Injectable()
 export class Validator {
@@ -9,6 +10,8 @@ export class Validator {
       case 'createUser':
         this.createUserValidate(object);
         break;
+      case 'updateUser':
+        this.updateUserValidate(object);
     }
   }
 
@@ -18,6 +21,17 @@ export class Validator {
     }
     if (!isEmail(user.email))
       throw new BadRequestException('Email is not valid');
+
+    if (user.password.length < 6 || user.password.length > 20)
+      throw new BadRequestException(
+        'Password must be between 6 and 20 characters',
+      );
+  }
+
+  private updateUserValidate(user: UpdateUserDto): void {
+    for (const key in user) {
+      if (!user[key]) throw new BadRequestException(`${key} is required`);
+    }
 
     if (user.password.length < 6 || user.password.length > 20)
       throw new BadRequestException(

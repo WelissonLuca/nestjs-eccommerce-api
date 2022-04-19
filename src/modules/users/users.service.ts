@@ -33,6 +33,7 @@ export class UsersService {
   }
 
   async updateUser(data: UpdateUserDto, email: string) {
+    this.validator.validate(data, 'updateUser');
     const user = await this.userRepository.findOneByEmail(email);
 
     if (!user) {
