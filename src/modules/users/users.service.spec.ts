@@ -1,3 +1,4 @@
+import { UserMemoryRepository } from './repositories/memory/user-memory.repository';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
@@ -7,26 +8,10 @@ import { UserRepositoryContracts } from './contracts/user-repository.contract';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 describe('UsersService', () => {
-  const users = [];
   let service: UsersService;
   let createUserDto: CreateUserDto;
   let updateUserDto: UpdateUserDto;
-
-  const mockedUserRepository: UserRepositoryContracts = {
-    create: jest.fn((user) => {
-      users.push(user);
-      return user;
-    }),
-    findOneByEmail: jest.fn((email) => {
-      return users.find((user) => user.email === email);
-    }),
-    update: jest.fn((data, email) => {
-      const user = users.find((user) => user.email === email);
-      user.name = data.name;
-      user.password = data.password;
-      return user;
-    }),
-  };
+  let userRepository: UserRepositoryContracts;
 
   beforeEach(async () => {
     createUserDto = {
@@ -40,13 +25,14 @@ describe('UsersService', () => {
       password: internet.password(),
     };
 
+    userRepository = new UserMemoryRepository();
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
         Validator,
         {
           provide: 'UserRepository',
-          useValue: mockedUserRepository,
+          useValue: userRepository,
         },
       ],
     }).compile();
@@ -109,9 +95,7 @@ describe('UsersService', () => {
       );
     });
     it('should not create a user if user already exists', () => {
-      jest
-        .spyOn(mockedUserRepository, 'findOneByEmail')
-        .mockReturnValueOnce(Promise.resolve(createUserDto));
+      userRepository.create(createUserDto);
       const promise = service.createUser(createUserDto);
       expect(promise).rejects.toThrowError(
         `User with email ${createUserDto.email} already exists`,
@@ -135,7 +119,7 @@ describe('UsersService', () => {
     });
 
     it('should return user', () => {
-      mockedUserRepository.create(createUserDto);
+      userRepository.create(createUserDto);
       const promise = service.findOneByEmail(createUserDto.email);
       expect(promise).resolves.toEqual(createUserDto);
     });
@@ -150,7 +134,7 @@ describe('UsersService', () => {
       );
     });
     it('should not update user if name is null', () => {
-      mockedUserRepository.create(createUserDto);
+      userRepository.create(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -161,7 +145,7 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError('name is required');
     });
     it('should not update user if password is null', () => {
-      mockedUserRepository.create(createUserDto);
+      userRepository.create(createUserDto);
       const promise = service.updateUser(
         {
           ...createUserDto,
@@ -172,7 +156,7 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError('password is required');
     });
     it('should not update a user if password less than 6 characters', () => {
-      mockedUserRepository.create(createUserDto);
+      userRepository.create(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -186,7 +170,7 @@ describe('UsersService', () => {
     });
 
     it('should not create a user if password longer than 20 characters', () => {
-      mockedUserRepository.create(createUserDto);
+      userRepository.create(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -200,11 +184,15 @@ describe('UsersService', () => {
     });
 
     it('should update user', async () => {
-      mockedUserRepository.create(createUserDto);
+      jest.spyOn(userRepository, 'update');
+      userRepository.create(createUserDto);
 
-      const user = await service.updateUser(updateUserDto, createUserDto.email);
+      await service.updateUser(updateUserDto, createUserDto.email);
 
-      expect(user).toEqual({ ...createUserDto, ...updateUserDto });
+      expect(userRepository.update).toHaveBeenCalledWith(
+        updateUserDto,
+        createUserDto.email,
+      );
     });
   });
 });
