@@ -3,4 +3,5 @@ export class DefaultBaseEntity {
   createdAt: Date;
   updatedAt: Date;
   deletedAt: Date;
+  isActive: boolean;
 }
