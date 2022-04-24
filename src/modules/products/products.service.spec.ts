@@ -68,4 +68,20 @@ describe('ProductsService', () => {
       await expect(promise).rejects.toThrow('No products found');
     });
   });
+
+  describe('FindById', () => {
+    it('should return a product', async () => {
+      const product = await productRepository.create(createProductDto);
+      const foundProduct = await service.findProductById(product.id);
+      expect(foundProduct).toBeDefined();
+      expect(foundProduct).toBeInstanceOf(Object);
+      expect(foundProduct.id).toBe(product.id);
+    });
+
+    it('should throw if no product is found', async () => {
+      const promise = service.findProductById(random.uuid());
+
+      await expect(promise).rejects.toThrow('No product found');
+    });
+  });
 });

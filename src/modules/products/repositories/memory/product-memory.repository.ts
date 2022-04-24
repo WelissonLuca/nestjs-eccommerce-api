@@ -21,4 +21,8 @@ export class ProductMemoryRepository implements ProductRepositoryContracts {
       this.products.filter((product) => product.categoryId === categoryId),
     );
   }
+
+  findProductById(id: string): Promise<Product> {
+    return Promise.resolve(this.products.find((product) => product.id === id));
+  }
 }

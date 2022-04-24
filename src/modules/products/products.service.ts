@@ -28,4 +28,14 @@ export class ProductsService {
 
     return products;
   }
+
+  async findProductById(id: string): Promise<Product> {
+    const product = await this.productRepository.findProductById(id);
+
+    if (!product) {
+      throw new BadRequestException('No product found');
+    }
+
+    return product;
+  }
 }
