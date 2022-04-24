@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { Validator } from './validators/validator';
+import { ProductsModule } from './modules/products/products.module';
 
 @Global()
 @Module({
-  imports: [UsersModule],
+  imports: [UsersModule, ProductsModule],
   controllers: [AppController],
   providers: [AppService, Validator],
 })
