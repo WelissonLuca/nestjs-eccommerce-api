@@ -15,4 +15,10 @@ export class ProductMemoryRepository implements ProductRepositoryContracts {
   findAll(): Promise<Product[]> {
     return Promise.resolve(this.products);
   }
+
+  findByCategory(categoryId: string): Promise<Product[]> {
+    return Promise.resolve(
+      this.products.filter((product) => product.categoryId === categoryId),
+    );
+  }
 }

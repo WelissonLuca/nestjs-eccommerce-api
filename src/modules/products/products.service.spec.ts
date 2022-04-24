@@ -42,5 +42,30 @@ describe('ProductsService', () => {
       expect(products).toBeDefined();
       expect(products).toBeInstanceOf(Array);
     });
+
+    it('should throw if no products are found', async () => {
+      const promise = service.findAll();
+
+      await expect(promise).rejects.toThrow('No products found');
+    });
+  });
+
+  describe('FindByCategory', () => {
+    it('should return an array of products', async () => {
+      await productRepository.create(createProductDto);
+      const products = await service.findProductsByCategory(
+        createProductDto.categoryId,
+      );
+      expect(products).toBeDefined();
+      expect(products).toBeInstanceOf(Array);
+    });
+
+    it('should throw if no products are found', async () => {
+      const promise = service.findProductsByCategory(
+        createProductDto.categoryId,
+      );
+
+      await expect(promise).rejects.toThrow('No products found');
+    });
   });
 });

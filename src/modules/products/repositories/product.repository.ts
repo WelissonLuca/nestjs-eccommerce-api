@@ -9,4 +9,8 @@ export class ProductRepository implements ProductRepositoryContracts {
   findAll(): Promise<Product[]> {
     throw new Error('Method not implemented.');
   }
+
+  findByCategory(categoryId: string): Promise<Product[]> {
+    throw new Error('Method not implemented.');
+  }
 }

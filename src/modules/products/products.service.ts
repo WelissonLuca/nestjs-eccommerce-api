@@ -18,4 +18,14 @@ export class ProductsService {
 
     return products;
   }
+
+  async findProductsByCategory(categoryId: string): Promise<Product[]> {
+    const products = await this.productRepository.findByCategory(categoryId);
+
+    if (products.length === 0) {
+      throw new BadRequestException('No products found');
+    }
+
+    return products;
+  }
 }
