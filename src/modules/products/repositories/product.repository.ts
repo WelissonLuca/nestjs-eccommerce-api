@@ -3,6 +3,9 @@ import { CreateProductDto } from '../dtos/create-product.dto';
 import { Product } from '../entities/product.entity';
 
 export class ProductRepository implements ProductRepositoryContracts {
+  findProductsByIds(ids: string[]): Promise<Product[]> {
+    throw new Error('Method not implemented.');
+  }
   findProductById(id: string): Promise<Product> {
     throw new Error('Method not implemented.');
   }
