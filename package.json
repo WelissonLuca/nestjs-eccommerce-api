@@ -17,6 +17,7 @@
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --forceExit",
     "test:staged": "npm test --findRelatedTests",
     "test:coveralls": "npm run test:ci -- --forceExit && coveralls < coverage/lcov.info",
+    "test:ci": "npm run test -- --coverage --forceExit",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
