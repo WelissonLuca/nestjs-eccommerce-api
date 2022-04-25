@@ -6,11 +6,16 @@ import { ProductsController } from './products.controller';
 @Module({
   controllers: [ProductsController],
   providers: [
-    ProductsService,
+    {
+      provide: 'ProductsService',
+      useValue: ProductsService,
+    },
+    ,
     {
       provide: 'ProductRepository',
       useValue: ProductRepository,
     },
   ],
+  exports: ['ProductsService'],
 })
 export class ProductsModule {}
