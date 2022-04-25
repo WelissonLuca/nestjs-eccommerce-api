@@ -21,7 +21,6 @@ export class OrdersService implements OrderServiceContracts {
   ) {}
   async registerOrder(data: CreateOrderDto): Promise<OrderOutputDto> {
     const productsIds = data.products.map((p) => p.id);
-    console.log(productsIds);
     const products = await this.productsService.findProductsByIds(productsIds);
 
     if (products.length === 0) {
@@ -62,7 +61,6 @@ export class OrdersService implements OrderServiceContracts {
     products: Product[],
     order: CreateOrderDto,
   ): number {
-    console.log(products);
     return products.reduce(
       (acc, product) =>
         acc +

@@ -13,7 +13,7 @@ describe('OrdersService', () => {
   const productService = {
     findProductsByIds: jest.fn((ids: string[]) => {
       const result = mockedProducts.filter((p) => ids.includes(p.id));
-      console.log(result);
+
       return Promise.resolve(result);
     }),
   };

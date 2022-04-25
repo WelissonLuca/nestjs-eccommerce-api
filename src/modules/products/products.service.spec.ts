@@ -56,7 +56,6 @@ describe('ProductsService', () => {
       const products = await service.findProductsByCategory(
         createProductDto.categoryId,
       );
-      console.log(products);
       expect(products).toBeDefined();
       expect(products).toBeInstanceOf(Array);
     });
