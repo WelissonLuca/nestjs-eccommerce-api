@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { FreightProviderContracts } from '../../modules/common/contracts/providers/freight-provider.contracts';
 import { freightApiConfig } from '../../config/freigth-api.config';
 import { requestHandler } from '../../utils/request';
 import { Product } from './../../modules/products/entities/product.entity';
@@ -6,7 +7,7 @@ import { CreateFreightDto } from './dtos/create-freight.dto';
 import { FreightDto } from './dtos/freight.dto';
 
 @Injectable()
-export class FreightProvider {
+export class FreightProvider implements FreightProviderContracts {
   async calculateFreight(data: CreateFreightDto): Promise<FreightDto> {
     const body = this.generateRequestBody(data);
     const url = 'me/shipment/calculate';
