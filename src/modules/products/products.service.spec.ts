@@ -46,7 +46,7 @@ describe('ProductsService', () => {
     it('should throw if no products are found', async () => {
       const promise = service.findAll();
 
-      await expect(promise).rejects.toThrow('No products found');
+      expect(promise).rejects.toThrow('No products found');
     });
   });
 
@@ -65,7 +65,7 @@ describe('ProductsService', () => {
         createProductDto.categoryId,
       );
 
-      await expect(promise).rejects.toThrow('No products found');
+      expect(promise).rejects.toThrow('No products found');
     });
   });
 
@@ -81,7 +81,7 @@ describe('ProductsService', () => {
     it('should throw if no product is found', async () => {
       const promise = service.findProductById(random.uuid());
 
-      await expect(promise).rejects.toThrow('No product found');
+      expect(promise).rejects.toThrow('No product found');
     });
   });
 });
