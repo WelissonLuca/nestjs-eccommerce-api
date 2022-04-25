@@ -8,7 +8,7 @@ export class OrderMemoryRepository implements OrderRepositoryContracts {
   create(data: CreateOrderDto): Promise<Order> {
     const entity = setBaseEntityValues();
     const order = new Order();
-    Object.assign(order, { entity, ...data });
+    Object.assign(order, { ...entity, ...data });
 
     this.orders.push(order);
 

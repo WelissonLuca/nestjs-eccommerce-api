@@ -2,7 +2,7 @@ import { ProductMemoryRepository } from './repositories/memory/product-memory.re
 import { ProductRepositoryContracts } from './contracts/product-repository.contract';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsService } from './products.service';
-import { internet, random } from 'faker';
+import faker from '@faker-js/faker';
 import { CreateProductDto } from './dtos/create-product.dto';
 
 describe('ProductsService', () => {
@@ -13,12 +13,12 @@ describe('ProductsService', () => {
   beforeEach(async () => {
     productRepository = new ProductMemoryRepository();
     createProductDto = {
-      name: internet.userName(),
-      categoryId: random.uuid(),
-      description: random.words(),
-      price: random.number(),
-      quantity: random.number(),
-      thumb: random.image(),
+      name: faker.internet.userName(),
+      categoryId: faker.datatype.uuid(),
+      description: faker.random.words(),
+      price: faker.datatype.number(),
+      quantity: faker.datatype.number(),
+      thumb: faker.image.business(),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -56,6 +56,7 @@ describe('ProductsService', () => {
       const products = await service.findProductsByCategory(
         createProductDto.categoryId,
       );
+      console.log(products);
       expect(products).toBeDefined();
       expect(products).toBeInstanceOf(Array);
     });
@@ -79,7 +80,7 @@ describe('ProductsService', () => {
     });
 
     it('should throw if no product is found', async () => {
-      const promise = service.findProductById(random.uuid());
+      const promise = service.findProductById(faker.datatype.uuid());
 
       expect(promise).rejects.toThrow('No product found');
     });

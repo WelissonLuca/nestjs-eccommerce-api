@@ -22,6 +22,7 @@ export class ProductsService implements ProductsServiceContracts {
 
   async findProductsByCategory(categoryId: string): Promise<Product[]> {
     const products = await this.productRepository.findByCategory(categoryId);
+    console.log(products);
 
     if (products.length === 0) {
       throw new BadRequestException('No products found');

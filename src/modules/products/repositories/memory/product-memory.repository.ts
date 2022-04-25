@@ -9,7 +9,7 @@ export class ProductMemoryRepository implements ProductRepositoryContracts {
   async create(data: CreateProductDto): Promise<Product> {
     const entity = setBaseEntityValues();
     const product = new Product();
-    Object.assign(product, { entity, data });
+    Object.assign(product, { ...entity, ...data });
     this.products.push(product);
     return product;
   }

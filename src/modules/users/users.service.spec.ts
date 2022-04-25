@@ -2,7 +2,7 @@ import { UserMemoryRepository } from './repositories/memory/user-memory.reposito
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
-import { internet } from 'faker';
+import faker from '@faker-js/faker';
 import { Validator } from '../../validators/validator';
 import { UserRepositoryContracts } from './contracts/user-repository.contract';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -15,14 +15,14 @@ describe('UsersService', () => {
 
   beforeEach(async () => {
     createUserDto = {
-      name: internet.userName(),
-      email: internet.email(),
-      password: internet.password(),
+      name: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
     };
 
     updateUserDto = {
-      name: internet.userName(),
-      password: internet.password(),
+      name: faker.internet.userName(),
+      password: faker.internet.password(),
     };
 
     userRepository = new UserMemoryRepository();
@@ -88,7 +88,7 @@ describe('UsersService', () => {
     it('should not create a user if password longer than 20 characters', () => {
       const promise = service.createUser({
         ...createUserDto,
-        password: internet.password(21),
+        password: faker.internet.password(21),
       });
       expect(promise).rejects.toThrowError(
         'Password must be between 6 and 20 characters',
@@ -111,7 +111,7 @@ describe('UsersService', () => {
 
   describe('findOneByEmail', () => {
     it('should return exception to a user not-exists', () => {
-      const email = internet.email();
+      const email = faker.internet.email();
       const promise = service.findOneByEmail(email);
       expect(promise).rejects.toThrowError(
         `User with email ${email} does not exist`,
@@ -127,7 +127,7 @@ describe('UsersService', () => {
 
   describe('updateUser', () => {
     it('should return exception to a user not-exists', () => {
-      const email = internet.email();
+      const email = faker.internet.email();
       const promise = service.updateUser(updateUserDto, email);
       expect(promise).rejects.toThrowError(
         `User with email ${email} does not exist`,
@@ -174,7 +174,7 @@ describe('UsersService', () => {
       const promise = service.updateUser(
         {
           ...updateUserDto,
-          password: internet.password(21),
+          password: faker.internet.password(21),
         },
         createUserDto.email,
       );
