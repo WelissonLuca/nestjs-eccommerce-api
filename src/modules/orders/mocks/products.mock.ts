@@ -1,5 +1,4 @@
 import faker from '@faker-js/faker';
-import * as crypto from 'crypto';
 
 export const mockedProducts = [
   {
