@@ -7,4 +7,10 @@ export class Product extends DefaultBaseEntity {
   thumb: string;
   categoryId: string;
   quantity: number;
+  properties: {
+    width: number;
+    height: number;
+    length: number;
+    weight: number;
+  };
 }
