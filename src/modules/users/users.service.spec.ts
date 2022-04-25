@@ -1,3 +1,4 @@
+import { UserRepository } from './repositories/user.repository';
 import { UserMemoryRepository } from './repositories/memory/user-memory.repository';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -31,7 +32,7 @@ describe('UsersService', () => {
         UsersService,
         Validator,
         {
-          provide: 'UserRepository',
+          provide: UserRepository,
           useValue: userRepository,
         },
       ],
@@ -95,7 +96,7 @@ describe('UsersService', () => {
       );
     });
     it('should not create a user if user already exists', () => {
-      userRepository.create(createUserDto);
+      userRepository.createUser(createUserDto);
       const promise = service.createUser(createUserDto);
       expect(promise).rejects.toThrowError(
         `User with email ${createUserDto.email} already exists`,
@@ -119,7 +120,7 @@ describe('UsersService', () => {
     });
 
     it('should return user', () => {
-      userRepository.create(createUserDto);
+      userRepository.createUser(createUserDto);
       const promise = service.findOneByEmail(createUserDto.email);
       expect(promise).resolves.toEqual(createUserDto);
     });
@@ -134,7 +135,7 @@ describe('UsersService', () => {
       );
     });
     it('should not update user if name is null', () => {
-      userRepository.create(createUserDto);
+      userRepository.createUser(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -145,7 +146,7 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError('name is required');
     });
     it('should not update user if password is null', () => {
-      userRepository.create(createUserDto);
+      userRepository.createUser(createUserDto);
       const promise = service.updateUser(
         {
           ...createUserDto,
@@ -156,7 +157,7 @@ describe('UsersService', () => {
       expect(promise).rejects.toThrowError('password is required');
     });
     it('should not update a user if password less than 6 characters', () => {
-      userRepository.create(createUserDto);
+      userRepository.createUser(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -169,8 +170,8 @@ describe('UsersService', () => {
       );
     });
 
-    it('should not create a user if password longer than 20 characters', () => {
-      userRepository.create(createUserDto);
+    it('should not createUser a user if password longer than 20 characters', () => {
+      userRepository.createUser(createUserDto);
       const promise = service.updateUser(
         {
           ...updateUserDto,
@@ -184,12 +185,12 @@ describe('UsersService', () => {
     });
 
     it('should update user', async () => {
-      jest.spyOn(userRepository, 'update');
-      userRepository.create(createUserDto);
+      jest.spyOn(userRepository, 'updateUser');
+      userRepository.createUser(createUserDto);
 
       await service.updateUser(updateUserDto, createUserDto.email);
 
-      expect(userRepository.update).toHaveBeenCalledWith(
+      expect(userRepository.updateUser).toHaveBeenCalledWith(
         updateUserDto,
         createUserDto.email,
       );

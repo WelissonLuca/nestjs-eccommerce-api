@@ -6,11 +6,24 @@ import { Validator } from './validators/validator';
 import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { ProviderModule } from './providers/provider.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './config/typeorm.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Global()
 @Module({
-  imports: [UsersModule, ProductsModule, OrdersModule, ProviderModule],
+  imports: [
+    ConfigModule.forRoot({
+      cache: true,
+    }),
+    TypeOrmModule.forRoot(typeOrmConfig),
+    UsersModule,
+    ProductsModule,
+    OrdersModule,
+    ProviderModule,
+  ],
   controllers: [AppController],
   providers: [AppService, Validator],
+  exports: [Validator],
 })
 export class AppModule {}

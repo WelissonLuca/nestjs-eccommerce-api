@@ -5,7 +5,7 @@ import { User } from '../../entities/user.entity';
 export class UserMemoryRepository implements UserRepositoryContracts {
   private users: User[] = [];
 
-  async create(user: User): Promise<User> {
+  async createUser(user: User): Promise<User> {
     this.users.push(user);
     return user;
   }
@@ -14,7 +14,7 @@ export class UserMemoryRepository implements UserRepositoryContracts {
     return this.users.find((user) => user.email === email);
   }
 
-  async update(data: UpdateUserDto, email: string): Promise<void> {
+  async updateUser(data: UpdateUserDto, email: string): Promise<void> {
     const user = await this.findOneByEmail(email);
     if (user) {
       user.name = data.name;

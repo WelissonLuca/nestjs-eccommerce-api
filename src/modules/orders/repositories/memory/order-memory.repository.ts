@@ -5,7 +5,7 @@ import { OrderRepositoryContracts } from './../../contracts/order-repository.con
 
 export class OrderMemoryRepository implements OrderRepositoryContracts {
   orders: Order[] = [];
-  create(data: CreateOrderDto): Promise<Order> {
+  registerOrder(data: CreateOrderDto): Promise<Order> {
     const entity = setBaseEntityValues();
     const order = new Order();
     Object.assign(order, { ...entity, ...data });

@@ -10,7 +10,7 @@ describe('ProductsController', () => {
       controllers: [ProductsController],
       providers: [
         {
-          provide: ProductsService,
+          provide: 'ProductsService',
           useValue: {},
         },
       ],

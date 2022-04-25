@@ -8,5 +8,5 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: development
-      POSTGRES_DB: nestj_eccommerce
+      POSTGRES_DB: nestjs_ecommerce
       PGDATA: /var/lib/postgres

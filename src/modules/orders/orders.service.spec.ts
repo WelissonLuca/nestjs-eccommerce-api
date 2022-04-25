@@ -1,3 +1,4 @@
+import { OrderRepository } from './repositories/order.repository';
 import { faker } from '@faker-js/faker';
 import { OrderMemoryRepository } from './repositories/memory/order-memory.repository';
 import { OrderRepositoryContracts } from './contracts/order-repository.contracts';
@@ -24,7 +25,7 @@ describe('OrdersService', () => {
       providers: [
         OrdersService,
         {
-          provide: 'OrderRepository',
+          provide: OrderRepository,
           useValue: orderRepository,
         },
         {

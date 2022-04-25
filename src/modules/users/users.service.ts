@@ -1,3 +1,5 @@
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserRepository } from './repositories/user.repository';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
@@ -8,7 +10,7 @@ import { UserRepositoryContracts } from './contracts/user-repository.contract';
 export class UsersService {
   constructor(
     private readonly validator: Validator,
-    @Inject('UserRepository')
+    @InjectRepository(UserRepository)
     private userRepository: UserRepositoryContracts,
   ) {}
   async createUser(user: CreateUserDto) {
@@ -19,7 +21,7 @@ export class UsersService {
         `User with email ${user.email} already exists`,
       );
     }
-    return this.userRepository.create(user);
+    return this.userRepository.createUser(user);
   }
 
   async findOneByEmail(email: string) {
@@ -40,6 +42,6 @@ export class UsersService {
       throw new BadRequestException(`User with email ${email} does not exist`);
     }
 
-    return this.userRepository.update(data, email);
+    return this.userRepository.updateUser(data, email);
   }
 }

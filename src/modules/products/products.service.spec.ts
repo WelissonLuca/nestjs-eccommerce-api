@@ -1,3 +1,4 @@
+import { ProductRepository } from './repositories/product.repository';
 import { ProductMemoryRepository } from './repositories/memory/product-memory.repository';
 import { ProductRepositoryContracts } from './contracts/product-repository.contract';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -24,7 +25,7 @@ describe('ProductsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ProductsService,
-        { provide: 'ProductRepository', useValue: productRepository },
+        { provide: ProductRepository, useValue: productRepository },
       ],
     }).compile();
 
@@ -37,7 +38,7 @@ describe('ProductsService', () => {
 
   describe('FindAll', () => {
     it('should return an array of products', async () => {
-      await productRepository.create(createProductDto);
+      await productRepository.createProduct(createProductDto);
       const products = await service.findAll();
       expect(products).toBeDefined();
       expect(products).toBeInstanceOf(Array);
@@ -52,7 +53,7 @@ describe('ProductsService', () => {
 
   describe('FindByCategory', () => {
     it('should return an array of products', async () => {
-      await productRepository.create(createProductDto);
+      await productRepository.createProduct(createProductDto);
       const products = await service.findProductsByCategory(
         createProductDto.categoryId,
       );
@@ -71,7 +72,7 @@ describe('ProductsService', () => {
 
   describe('FindById', () => {
     it('should return a product', async () => {
-      const product = await productRepository.create(createProductDto);
+      const product = await productRepository.createProduct(createProductDto);
       const foundProduct = await service.findProductById(product.id);
       expect(foundProduct).toBeDefined();
       expect(foundProduct).toBeInstanceOf(Object);

@@ -1,7 +1,10 @@
-import { Controller } from '@nestjs/common';
-import { OrdersService } from './orders.service';
+import { Controller, Inject } from '@nestjs/common';
+import { OrderServiceContracts } from '../common/contracts/services/order-service.contracts';
 
 @Controller('orders')
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    @Inject('OrdersService')
+    private readonly ordersService: OrderServiceContracts,
+  ) {}
 }

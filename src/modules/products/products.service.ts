@@ -1,4 +1,6 @@
+import { ProductRepository } from './repositories/product.repository';
 import { Injectable, BadRequestException, Inject } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { ProductsServiceContracts } from '../common/contracts/services/products-service.contracts';
 import { ProductRepositoryContracts } from './contracts/product-repository.contract';
 import { Product } from './entities/product.entity';
@@ -6,7 +8,7 @@ import { Product } from './entities/product.entity';
 @Injectable()
 export class ProductsService implements ProductsServiceContracts {
   constructor(
-    @Inject('ProductRepository')
+    @InjectRepository(ProductRepository)
     private readonly productRepository: ProductRepositoryContracts,
   ) {}
 

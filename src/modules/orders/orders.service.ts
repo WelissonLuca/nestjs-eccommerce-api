@@ -8,11 +8,13 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrderRepositoryContracts } from './contracts/order-repository.contracts';
 import { OrderOutputDto } from './dtos/order-output.dto';
 import { OrderServiceContracts } from '../common/contracts/services/order-service.contracts';
+import { InjectRepository } from '@nestjs/typeorm';
+import { OrderRepository } from './repositories/order.repository';
 
 @Injectable()
 export class OrdersService implements OrderServiceContracts {
   constructor(
-    @Inject('OrderRepository')
+    @InjectRepository(OrderRepository)
     private readonly orderRepository: OrderRepositoryContracts,
     @Inject('FreightProvider')
     private readonly freightProvider: FreightProvider,
@@ -75,7 +77,7 @@ export class OrdersService implements OrderServiceContracts {
     products: Product[],
   ): Promise<Order> {
     const totalPrice = this.calculateTotalPrice(products, order);
-    return this.orderRepository.create({
+    return this.orderRepository.registerOrder({
       ...order,
       totalPrice,
     });

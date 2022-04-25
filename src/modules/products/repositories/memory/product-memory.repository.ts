@@ -6,7 +6,7 @@ import { ProductRepositoryContracts } from './../../contracts/product-repository
 export class ProductMemoryRepository implements ProductRepositoryContracts {
   products: Product[] = [];
 
-  async create(data: CreateProductDto): Promise<Product> {
+  async createProduct(data: CreateProductDto): Promise<Product> {
     const entity = setBaseEntityValues();
     const product = new Product();
     Object.assign(product, { ...entity, ...data });
