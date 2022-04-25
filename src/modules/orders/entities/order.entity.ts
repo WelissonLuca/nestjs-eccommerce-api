@@ -3,12 +3,12 @@ import { DefaultBaseEntity } from '../../common/base/entities/default-base-entit
 
 export class Order extends DefaultBaseEntity {
   consumerId: string;
-  productId: string;
-  quantity: number;
-  totalItemsPrice: number;
+  products: {
+    id: string;
+    quantity: number;
+  };
   totalPrice: number;
   status: string;
-  freight: number;
   discount?: number;
   paymentMethod: PaymentMethod;
 }
