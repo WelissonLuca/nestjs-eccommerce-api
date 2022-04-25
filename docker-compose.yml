@@ -1,0 +1,12 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "5542:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: development
+      POSTGRES_DB: nestj_eccommerce
+      PGDATA: /var/lib/postgres
