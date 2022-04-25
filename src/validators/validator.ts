@@ -1,7 +1,7 @@
-import { isEmail } from 'class-validator';
 import { CreateUserDto } from './../modules/users/dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateUserDto } from 'src/modules/users/dtos/update-user.dto';
+import { isEmail } from '../utils/is-email';
 
 @Injectable()
 export class Validator {
