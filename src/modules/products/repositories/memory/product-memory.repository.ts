@@ -1,3 +1,4 @@
+import { CreateProductDto } from './../../dtos/create-product.dto';
 import { setBaseEntityValues } from './../../../../utils/set-base-entity-values';
 import { Product } from '../../entities/product.entity';
 import { ProductRepositoryContracts } from './../../contracts/product-repository.contract';
@@ -5,9 +6,10 @@ import { ProductRepositoryContracts } from './../../contracts/product-repository
 export class ProductMemoryRepository implements ProductRepositoryContracts {
   products: Product[] = [];
 
-  async create(product: Product): Promise<Product> {
+  async create(data: CreateProductDto): Promise<Product> {
     const entity = setBaseEntityValues();
-    Object.assign(product, { entity });
+    const product = new Product();
+    Object.assign(product, { entity, data });
     this.products.push(product);
     return product;
   }
@@ -24,5 +26,11 @@ export class ProductMemoryRepository implements ProductRepositoryContracts {
 
   findProductById(id: string): Promise<Product> {
     return Promise.resolve(this.products.find((product) => product.id === id));
+  }
+
+  findProductsByIds(ids: string[]): Promise<Product[]> {
+    return Promise.resolve(
+      this.products.filter((product) => ids.includes(product.id)),
+    );
   }
 }

@@ -5,4 +5,5 @@ export interface ProductRepositoryContracts {
   findAll(): Promise<Product[]>;
   findByCategory(categoryId: string): Promise<Product[]>;
   findProductById(id: string): Promise<Product>;
+  findProductsByIds(ids: string[]): Promise<Product[]>;
 }
