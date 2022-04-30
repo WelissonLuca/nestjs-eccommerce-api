@@ -7,7 +7,7 @@ import { ProductsModule } from './modules/products/products.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import { ProviderModule } from './providers/provider.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeOrmConfig } from './config/typeorm.config';
+import { typeOrmConfig } from './configs/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 
 @Global()
