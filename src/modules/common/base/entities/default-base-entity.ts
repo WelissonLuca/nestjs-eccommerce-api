@@ -6,13 +6,13 @@ import {
   UpdateDateColumn,
   DeleteDateColumn,
   Column,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 export class DefaultBaseEntity extends BaseEntity {
-  @PrimaryColumn({
-    type: 'uuid',
-  })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
+
   @CreateDateColumn({
     type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP',
@@ -32,9 +32,4 @@ export class DefaultBaseEntity extends BaseEntity {
     default: false,
   })
   isActive: boolean;
-
-  constructor() {
-    super();
-    this.id = randomBytes(16).toString('hex');
-  }
 }
