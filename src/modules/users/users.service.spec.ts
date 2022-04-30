@@ -113,7 +113,7 @@ describe('UsersService', () => {
   describe('findOneByEmail', () => {
     it('should return exception to a user not-exists', () => {
       const email = faker.internet.email();
-      const promise = service.findOneByEmail(email);
+      const promise = service.findByEmail(email);
       expect(promise).rejects.toThrowError(
         `User with email ${email} does not exist`,
       );
@@ -121,7 +121,7 @@ describe('UsersService', () => {
 
     it('should return user', () => {
       userRepository.createUser(createUserDto);
-      const promise = service.findOneByEmail(createUserDto.email);
+      const promise = service.findByEmail(createUserDto.email);
       expect(promise).resolves.toEqual(createUserDto);
     });
   });

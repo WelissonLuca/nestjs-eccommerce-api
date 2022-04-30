@@ -1,4 +1,4 @@
-import { UpdateUserDto } from 'src/modules/users/dtos/update-user.dto';
+import { UpdateUserDto } from '../users/dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserModel } from './../common/models/user.model';
 import { UserServiceContracts } from './../common/contracts/services/user-service.cotracts';
