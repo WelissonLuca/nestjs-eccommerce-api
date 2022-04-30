@@ -1,5 +1,5 @@
 import { ProductRepository } from './repositories/product.repository';
-import { Injectable, BadRequestException, Inject } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductsServiceContracts } from '../common/contracts/services/products-service.contracts';
 import { ProductRepositoryContracts } from './contracts/product-repository.contract';

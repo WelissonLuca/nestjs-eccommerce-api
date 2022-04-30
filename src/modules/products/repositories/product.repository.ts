@@ -23,7 +23,7 @@ export class ProductRepository
 
   findByCategory(categoryId: string): Promise<Product[]> {
     return this.createQueryBuilder('product')
-      .innerJoin('product.categories', 'category')
+      .innerJoin('product.category', 'category')
       .where('category.id = :categoryId', { categoryId })
       .getMany();
   }
