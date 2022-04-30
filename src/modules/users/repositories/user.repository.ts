@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from './../dtos/create-user.dto';
 import { Repository } from 'typeorm';
 import { UserRepositoryContracts } from '../contracts/user-repository.contract';
 import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -8,13 +8,21 @@ export class UserRepository
   extends Repository<User>
   implements UserRepositoryContracts
 {
-  updateUser(data: UpdateUserDto, email: string): Promise<any> {
-    return;
+  async updateUser(data: UpdateUserDto, email: string): Promise<void> {
+    await this.update(
+      {
+        ...data,
+        updatedAt: new Date(),
+      },
+      {
+        email,
+      },
+    );
   }
-  findOneByEmail(email: string): Promise<any> {
-    return;
+  async findOneByEmail(email: string): Promise<User> {
+    return this.findOneBy({ email });
   }
-  createUser(user: any): Promise<any> {
-    return;
+  async createUser(data: CreateUserDto): Promise<User> {
+    return this.save(data);
   }
 }

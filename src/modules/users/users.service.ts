@@ -5,6 +5,7 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Validator } from '../../validators/validator';
 import { UserRepositoryContracts } from './contracts/user-repository.contract';
+import { UserModel } from '../common/models/user.model';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +14,7 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: UserRepositoryContracts,
   ) {}
-  async createUser(user: CreateUserDto) {
+  async createUser(user: CreateUserDto): Promise<UserModel> {
     this.validator.validate(user, 'createUser');
     const userExists = await this.userRepository.findOneByEmail(user.email);
     if (userExists) {
@@ -24,7 +25,7 @@ export class UsersService {
     return this.userRepository.createUser(user);
   }
 
-  async findOneByEmail(email: string) {
+  async findOneByEmail(email: string): Promise<UserModel> {
     const user = await this.userRepository.findOneByEmail(email);
 
     if (!user) {
@@ -34,7 +35,7 @@ export class UsersService {
     return user;
   }
 
-  async updateUser(data: UpdateUserDto, email: string) {
+  async updateUser(data: UpdateUserDto, email: string): Promise<void> {
     this.validator.validate(data, 'updateUser');
     const user = await this.userRepository.findOneByEmail(email);
 
