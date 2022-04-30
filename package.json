@@ -21,7 +21,14 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "typeorm:create": "DB_SCHEMA=postgres ts-node --transpile-only ./node_modules/typeorm/cli.js query --config ./src/configs/orm.config.js \"CREATE DATABASE \\\"${DB_SCHEMA}\\\"\"",
+    "typeorm:drop": "ts-node --transpile-only ./node_modules/typeorm/cli.js schema:drop --config ./src/configs/orm.config.js",
+    "typeorm:seed": "ts-node --transpile-only ./node_modules/typeorm-seeding/dist/cli.js seed -n ./src/configs/orm.config.js",
+    "typeorm:migration:run": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run --config ./src/configs/orm.config.js",
+    "typeorm:migration:revert": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:revert --config ./src/configs/orm.config.js",
+    "typeorm:migration:generate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:generate --config ./src/configs/orm.config.js"
   },
   "dependencies": {
     "@nestjs/common": "8.4.4",
@@ -31,12 +38,14 @@
     "@nestjs/platform-express": "8.4.4",
     "@nestjs/typeorm": "^8.0.3",
     "axios": "0.27.0",
+    "class-transformer": "^0.5.1",
     "class-validator": "0.13.2",
     "dotenv": "^16.0.0",
     "pg": "^8.7.3",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.5.5",
+    "tslib": "1.11.2",
     "typeorm": "^0.3.6"
   },
   "devDependencies": {
@@ -94,5 +103,8 @@
       "yarn lint --fix",
       "npm run test:staged"
     ]
+  },
+  "resolutions": {
+    "tslib": "1.11.2"
   }
 }

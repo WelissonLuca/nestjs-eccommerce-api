@@ -4,7 +4,6 @@ import { UserRepositoryContracts } from '../contracts/user-repository.contract';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { User } from '../entities/user.entity';
 
-@Injectable()
 export class UserRepository
   extends Repository<User>
   implements UserRepositoryContracts

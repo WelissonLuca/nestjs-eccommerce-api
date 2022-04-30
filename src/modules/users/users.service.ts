@@ -1,5 +1,5 @@
+import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from './repositories/user.repository';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
@@ -10,7 +10,7 @@ import { UserRepositoryContracts } from './contracts/user-repository.contract';
 export class UsersService {
   constructor(
     private readonly validator: Validator,
-    @InjectRepository(UserRepository)
+    @InjectRepository(User)
     private userRepository: UserRepositoryContracts,
   ) {}
   async createUser(user: CreateUserDto) {

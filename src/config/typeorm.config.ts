@@ -8,7 +8,7 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.PG_DB_USER,
   password: String(process.env.PG_DB_PASSWORD),
   database: process.env.PG_DB_NAME,
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
+  entities: [__dirname + '/../modules/**/*.entity.{js,ts}'],
   synchronize: true,
   logging: true,
   logger: 'advanced-console',
@@ -21,4 +21,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   },
   subscribers: [__dirname + '/database/subscriber/*{.ts,.js}'],
   installExtensions: true,
+  autoLoadEntities: true,
 };

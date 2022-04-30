@@ -1,14 +1,25 @@
-import { Entity } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { DefaultBaseEntity } from '../../common/base/entities/default-base-entity';
 
 @Entity('products')
 export class Product extends DefaultBaseEntity {
+  @Column()
   name: string;
+  @Column({
+    type: 'text',
+  })
   description: string;
+  @Column()
   price: number;
+  @Column()
   thumb: string;
+  @Column()
   categoryId: string;
+  @Column()
   quantity: number;
+  @Column({
+    type: 'jsonb',
+  })
   properties: {
     width: number;
     height: number;
