@@ -1,26 +1,30 @@
-import { Repository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { ProductRepositoryContracts } from '../contracts/product-repository.contract';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { Product } from '../entities/product.entity';
 
+@EntityRepository(Product)
 export class ProductRepository
   extends Repository<Product>
   implements ProductRepositoryContracts
 {
   findProductsByIds(ids: string[]): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    return this.findByIds(ids);
   }
   findProductById(id: string): Promise<Product> {
-    throw new Error('Method not implemented.');
+    return this.findOne(id);
   }
-  createProduct(product: CreateProductDto): Promise<Product> {
-    throw new Error('Method not implemented.');
+  createProduct(data: CreateProductDto): Promise<Product> {
+    return this.save(data);
   }
   findAll(): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    return this.find();
   }
 
   findByCategory(categoryId: string): Promise<Product[]> {
-    throw new Error('Method not implemented.');
+    return this.createQueryBuilder('product')
+      .innerJoin('product.categories', 'category')
+      .where('category.id = :categoryId', { categoryId })
+      .getMany();
   }
 }

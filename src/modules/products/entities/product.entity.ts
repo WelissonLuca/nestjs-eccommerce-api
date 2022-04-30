@@ -1,4 +1,5 @@
-import { Column, Entity } from 'typeorm';
+import { Category } from './categories.entity';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { DefaultBaseEntity } from '../../common/base/entities/default-base-entity';
 
 @Entity('products')
@@ -13,7 +14,10 @@ export class Product extends DefaultBaseEntity {
   price: number;
   @Column()
   thumb: string;
-  @Column()
+  @Column({
+    type: 'uuid',
+    name: 'category_id',
+  })
   categoryId: string;
   @Column()
   quantity: number;
@@ -26,4 +30,8 @@ export class Product extends DefaultBaseEntity {
     length: number;
     weight: number;
   };
+
+  @ManyToOne(() => Category, (category) => category.products)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 }
