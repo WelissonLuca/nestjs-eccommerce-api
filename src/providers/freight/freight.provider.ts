@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FreightProviderContracts } from '../../modules/common/contracts/providers/freight-provider.contracts';
-import { freightApiConfig } from '../../config/freigth-api.config';
+import { freightApiConfig } from '../../configs/freigth-api.config';
 import { requestHandler } from '../../utils/request';
 import { Product } from './../../modules/products/entities/product.entity';
 import { CreateFreightDto } from './dtos/create-freight.dto';

@@ -10,12 +10,12 @@ export class UserMemoryRepository implements UserRepositoryContracts {
     return user;
   }
 
-  async findOneByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User> {
     return this.users.find((user) => user.email === email);
   }
 
   async updateUser(data: UpdateUserDto, email: string): Promise<void> {
-    const user = await this.findOneByEmail(email);
+    const user = await this.findByEmail(email);
     if (user) {
       user.name = data.name;
       user.password = data.password;
