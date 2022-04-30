@@ -21,5 +21,4 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   },
   subscribers: [__dirname + '/database/subscriber/*{.ts,.js}'],
   installExtensions: true,
-  autoLoadEntities: true,
 };
