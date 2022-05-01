@@ -4,7 +4,7 @@ import { OrderMemoryRepository } from './repositories/memory/order-memory.reposi
 import { OrderRepositoryContracts } from './contracts/order-repository.contracts';
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersService } from './orders.service';
-import { mockedProducts } from './mocks/products.mock';
+import { mockedProducts } from '../common/mocks/products.mock';
 import { PaymentMethod } from '../common/types/payment-methods.enum';
 import { OrderStatus } from '../common/types/order-status.enum';
 

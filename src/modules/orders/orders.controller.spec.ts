@@ -6,7 +6,7 @@ import { Order } from './entities/order.entity';
 import faker from '@faker-js/faker';
 import { OrderStatus } from '../common/types/order-status.enum';
 import { PaymentMethod } from '../common/types/payment-methods.enum';
-import { mockedProducts } from './mocks/products.mock';
+import { mockedProducts } from '../common/mocks/products.mock';
 
 describe('OrdersController', () => {
   let controller: OrdersController;
