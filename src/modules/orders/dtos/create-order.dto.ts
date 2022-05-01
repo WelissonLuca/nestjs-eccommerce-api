@@ -1,4 +1,4 @@
-import { OrderStatus } from './../../common/types/order-status.enum';
+import { OrderStatus } from '../../common/types/order-status.enum';
 import { PaymentMethod } from '../../common/types/payment-methods.enum';
 
 export class CreateOrderDto {

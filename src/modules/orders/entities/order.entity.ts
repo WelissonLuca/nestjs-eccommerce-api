@@ -1,5 +1,5 @@
 import { OrderStatus } from '../../common/types/order-status.enum';
-import { PaymentMethod } from 'src/modules/common/types/payment-methods.enum';
+import { PaymentMethod } from '../../common/types/payment-methods.enum';
 import { Column, Entity } from 'typeorm';
 import { DefaultBaseEntity } from '../../common/base/entities/default-base-entity';
 

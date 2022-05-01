@@ -6,6 +6,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersService } from './orders.service';
 import { mockedProducts } from './mocks/products.mock';
 import { PaymentMethod } from '../common/types/payment-methods.enum';
+import { OrderStatus } from '../common/types/order-status.enum';
 
 describe('OrdersService', () => {
   let orderRepository: OrderRepositoryContracts;
@@ -54,7 +55,7 @@ describe('OrdersService', () => {
         zipCode: faker.address.zipCode(),
         consumerId: faker.datatype.uuid(),
         paymentMethod: PaymentMethod.CREDIT_CARD,
-        status: 'pending',
+        status: OrderStatus.PENDING,
         products: [
           {
             id: mockedProducts[0].id,
