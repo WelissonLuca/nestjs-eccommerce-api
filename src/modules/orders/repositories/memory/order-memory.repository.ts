@@ -14,16 +14,10 @@ export class OrderMemoryRepository implements OrderRepositoryContracts {
 
     return Promise.resolve(order);
   }
-  findAll(): Promise<Order[]> {
-    throw new Error('Method not implemented.');
-  }
-  findByCategory(categoryId: string): Promise<Order[]> {
+  findAllByConsumerId(consumerId: string): Promise<Order[]> {
     throw new Error('Method not implemented.');
   }
   findOrderById(id: string): Promise<Order> {
-    throw new Error('Method not implemented.');
-  }
-  findOrdersByIds(ids: string[]): Promise<Order[]> {
     throw new Error('Method not implemented.');
   }
 }
