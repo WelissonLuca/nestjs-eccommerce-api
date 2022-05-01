@@ -15,7 +15,7 @@ describe('OrdersController', () => {
     registerOrder: jest.fn((data: CreateOrderDto) => {
       const entity = setBaseEntityValues();
       const order = new Order();
-      return Object.assign(order, { ...entity, ...data });
+      return Promise.resolve(Object.assign(order, { ...entity, ...data }));
     }),
   };
   beforeEach(async () => {
