@@ -1,3 +1,4 @@
+import { OrderStatus } from './../../common/types/order-status.enum';
 import { PaymentMethod } from '../../common/types/payment-methods.enum';
 
 export class CreateOrderDto {
@@ -6,7 +7,7 @@ export class CreateOrderDto {
     id: string;
     quantity: number;
   }[];
-  status: string;
+  status: OrderStatus;
   totalPrice?: number;
   paymentMethod: PaymentMethod;
   zipCode: string;
